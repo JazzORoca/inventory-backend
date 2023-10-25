@@ -6,13 +6,13 @@ import lombok.Data;
 @Data
 public class CategoryResponse {
 private List<Category>category;
-
-public void setCategory(List<Category> category2) {
-	// TODO Auto-generated method stub
-	
-}
-
 public List<Category> getCategory() {
 	return category;
 }
+public void setCategory(List<Category> category2) {
+	this.category=category2;
+	
+}
+
+
 }

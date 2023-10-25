@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CategoryResponseRest extends ResponseRest{
+	private CategoryResponse categoryResponse=new CategoryResponse();
 public CategoryResponse getCategoryResponse() {
 		return categoryResponse;
 	}
@@ -14,7 +15,7 @@ public CategoryResponse getCategoryResponse() {
 		this.categoryResponse = categoryResponse;
 	}
 
-private CategoryResponse categoryResponse=new CategoryResponse();
+
 
 
 

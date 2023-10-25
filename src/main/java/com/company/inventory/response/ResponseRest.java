@@ -1,7 +1,7 @@
 package com.company.inventory.response;
 import java.util.ArrayList;
 import java.util.HashMap;
-//clase encargada de toda la metadat
+//clase encargada de toda la metadata
 public class ResponseRest {
 private ArrayList<HashMap<String,String>>metadata=new ArrayList<>();
 
