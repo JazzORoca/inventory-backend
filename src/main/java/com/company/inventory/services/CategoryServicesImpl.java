@@ -92,7 +92,7 @@ response.setMetadata("Respuesta nok", "-1", "Error categoria no guardada");
 			Optional<Category>categorySearch=categoryDao.findById(id);
 			if(categorySearch.isPresent()) {
 				//se procedera a actualizar el registro
-				categorySearch.get().setNombre(category.getNombre());
+				categorySearch.get().SetNombre(category.getNombre());
 				categorySearch.get().setDescription(category.getDescription());
 				Category categoryUpdated=categoryDao.save(categorySearch.get());
 				if(categoryUpdated!=null) {
@@ -118,6 +118,22 @@ response.setMetadata("Respuesta nok", "-1", "Error categoria no encontrada");
 			return new ResponseEntity<CategoryResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<CategoryResponseRest>(response,HttpStatus.OK);
+	}
+	@Override
+	@Transactional
+	public ResponseEntity<CategoryResponseRest> delete(Long id) {
+		CategoryResponseRest response=new CategoryResponseRest();
+		try{
+		categoryDao.deleteById(id);
+		response.setMetadata("rta ok", "00", "Registro eliminar");
+		}catch(Exception e) {
+
+			response.setMetadata("Respuesta nok", "-1", "Error al eliminar");
+			e.getStackTrace();
+			return new ResponseEntity<CategoryResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<CategoryResponseRest>(response,HttpStatus.OK);
+		
 	}
 
 }

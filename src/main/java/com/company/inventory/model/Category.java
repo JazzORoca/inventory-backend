@@ -21,26 +21,35 @@ public class Category implements Serializable {
 	private Long id;
 	private String nombre;
 	private String description;
+	
 	public Long getId() {
-		return id;
+		return this.id;
 	}
+	
+	
 	public void setId(Long id) {
-		this.id = id;
+		this.id=id;
 	}
+	
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void  SetNombre(String nombre) {
+		this.nombre=nombre;
 	}
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
+	
 	public void setDescription(String description) {
-		this.description = description;
+		this.description=description;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	
+	
+	
+	
+	
+	
+
 	
 }
