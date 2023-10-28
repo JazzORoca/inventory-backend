@@ -6,6 +6,8 @@ import com.company.inventory.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +39,11 @@ public ResponseEntity<ProductResponseRest>save(
 	
 	return response;
 	
+}
+@GetMapping("/products/{id}")
+public ResponseEntity<ProductResponseRest>searchById(@PathVariable Long id){
+	ResponseEntity<ProductResponseRest>response=productService.searchById(id);
+	return response;
 }
 
 }
