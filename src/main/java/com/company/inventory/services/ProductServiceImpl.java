@@ -137,5 +137,37 @@ listAux=productDao.findByNameContainingIgnoreCase(name);
 		 return new ResponseEntity<ProductResponseRest>(response,HttpStatus.OK);
 	
 	}
+	@Override
+	@Transactional
+	public ResponseEntity<ProductResponseRest> search() {
+		ProductResponseRest response=new ProductResponseRest();
+		List<Product>list=new ArrayList<>();
+		List<Product>listAux=new ArrayList<>();
+		try{
+			//search product by name
+listAux=(List<Product>) productDao.findAll();
+			if(listAux.size()>0){
+				listAux.stream().forEach((p)->{
+					byte [] imagenDescompressed=Util.compressZLib(p.getPicture());
+					p.setPicture(imagenDescompressed);
+					list.add(p);
+				});
+				
+			response.getProductResponse().setProducts(list);
+			response.setMetadata("rta ok","00","Productos encontrados");
+			}else {
+				response.setMetadata("rta nok", "-1", "productos no encontrados");
+			return new ResponseEntity<ProductResponseRest>(response,HttpStatus.NOT_FOUND);
+			
+			}
+	
+		}catch(Exception e) {
+			e.getStackTrace();
+			response.setMetadata("rta nok", "-1", "error al buscar productos");
+			return new ResponseEntity<ProductResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		 return new ResponseEntity<ProductResponseRest>(response,HttpStatus.OK);
+	
+	}
 
 }
