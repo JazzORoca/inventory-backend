@@ -169,5 +169,53 @@ listAux=(List<Product>) productDao.findAll();
 		 return new ResponseEntity<ProductResponseRest>(response,HttpStatus.OK);
 	
 	}
+	
+	@Override
+	@Transactional
+	public ResponseEntity<ProductResponseRest> update(Product product,Long idCategory,Long idProduct) {
+		ProductResponseRest response=new ProductResponseRest();
+		List<Product>list=new ArrayList<>();
+		try{
+			//search category to set in the product object
+			Optional<Category>category=categoryDao.findById(idCategory);
+			if(category.isPresent()){
+				product.setCategory(category.get());
+			}else {
+				response.setMetadata("rta nok", "-1", "categoria no encontrada asociada al producto");
+			return new ResponseEntity<ProductResponseRest>(response,HttpStatus.NOT_FOUND);
+			
+			}
+			//search  product to update
+			Optional<Product> productSearch=productDao.findById(idProduct);
+			if(productSearch.isPresent()) {
+				
+				//se actualiza el producto
+				productSearch.get().setAccount(product.getAccount());
+				productSearch.get().setCategory(product.getCategory());
+				productSearch.get().setName(product.getName());
+				productSearch.get().setPicture(product.getPicture());
+				productSearch.get().setPrice(product.getPrice());
+				//guardar producto en db
+				Product productToUpdate=productDao.save(productSearch.get());
+if(productToUpdate!=null) {
+	list.add(productToUpdate);
+	response.getProductResponse().setProducts(list);
+	response.setMetadata("rta ok", "00", " producto actualizado");
+}else {
+	response.setMetadata("rta nok", "-1", " producto no actualizado");
+	return new ResponseEntity<ProductResponseRest>(response,HttpStatus.BAD_REQUEST);
+}
+				
+			}else {
+				response.setMetadata("rta nok", "-1", " producto no actualizado");
+				return new ResponseEntity<ProductResponseRest>(response,HttpStatus.NOT_FOUND);
+			}
+		}catch(Exception e) {
+			e.getStackTrace();
+			response.setMetadata("rta nok", "-1", "error al actualizar producto");
+			return new ResponseEntity<ProductResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		 return new ResponseEntity<ProductResponseRest>(response,HttpStatus.OK);
+	}
 
 }
