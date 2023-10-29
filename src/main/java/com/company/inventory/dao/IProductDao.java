@@ -9,8 +9,10 @@ import com.company.inventory.model.Product;
 
 public interface IProductDao extends CrudRepository<Product, Long> {
 
-	@Query("select p from Product where p.name like %?1%")
+	@Query("SELECT p FROM Product p WHERE p.name LIKE %?1%")
 	List<Product> findByNameLike(String name);
+
+
 	//metodo de la documentacion
 	List<Product>findByNameContainingIgnoreCase(String name);
 }
